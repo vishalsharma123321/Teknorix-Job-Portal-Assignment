@@ -58,11 +58,6 @@ export async function fetchJobs(params = {}, directJobId = false) {
 }
 
 
-
-
-
-
-
 // function name to match JobDetailsPage import
 export async function fetchJobDetails(id) {
   const res = await fetch(`${BASE}/api/v1/jobs/${id}`)
