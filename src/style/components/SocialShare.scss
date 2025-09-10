@@ -1,0 +1,52 @@
+.social-share {
+  .social-buttons {
+    display: flex;
+    gap: 12px;
+
+    .social-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
+
+      &.facebook {
+        background-color: #1877f2;
+        color: white;
+
+        &:hover {
+          background-color: #166fe5;
+          transform: translateY(-2px);
+        }
+      }
+
+      &.linkedin {
+        background-color: #0077b5;
+        color: white;
+
+        &:hover {
+          background-color: #006ba1;
+          transform: translateY(-2px);
+        }
+      }
+
+      &.twitter {
+        background-color: #1da1f2;
+        color: white;
+
+        &:hover {
+          background-color: #1a91da;
+          transform: translateY(-2px);
+        }
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
