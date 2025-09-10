@@ -21,8 +21,10 @@ body {
   padding: 0 20px;
 }
 img{
-    width: 750px;
-}
+ max-width: 100%;   /* Prevents image from overflowing container */
+  height: auto;      /* Keeps aspect ratio */
+  object-fit: cover; /* Ensures it fills the box without distortion */
+  border-radius: 8px; /* Optional - makes it look nice */}
 .loading {
   display: flex;
   justify-content: center;
