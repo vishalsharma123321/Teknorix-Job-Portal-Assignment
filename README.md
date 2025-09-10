@@ -84,7 +84,7 @@ The application integrates with the Jobsoid API:
 ## Features Implementation
 
 ### Search and Filtering
-- Text search by job title
+- Text search by job title, job Id, or Anything Realted to job
 - Dropdown filters for department, location, and function
 - Active filter tags with remove functionality
 - Clear all filters option
