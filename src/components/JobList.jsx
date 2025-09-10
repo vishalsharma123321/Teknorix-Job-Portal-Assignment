@@ -14,7 +14,6 @@ const JobList = ({ jobs, loading }) => {
     return <div className="no-jobs">No jobs found</div>;
   }
 
-  // Group jobs by department, handle cases where department is null
   const jobsByDepartment = jobs.reduce((acc, job) => {
     const deptTitle = job.department?.title || job.industry || 'General';
     if (!acc[deptTitle]) {

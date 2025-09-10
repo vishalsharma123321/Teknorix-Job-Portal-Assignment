@@ -7,14 +7,12 @@ const SearchFilters = ({ filters, lookups, onFilterChange, onRemoveFilter }) => 
 
 const handleInputChange = (value) => {
   setSearchText(value);
-  // Always do live search (text or number)
   onFilterChange({ q: value });
 };
 
 const handleSearch = (e) => {
   e.preventDefault();
   if (searchText.trim()) {
-    // If numeric, explicitly trigger job ID fetch
     const isNumeric = /^\d+$/.test(searchText.trim());
     onFilterChange({ q: searchText.trim() }, isNumeric);
   }

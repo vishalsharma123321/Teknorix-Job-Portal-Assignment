@@ -22,7 +22,6 @@ export async function fetchJobById(id) {
   const res = await fetch(`${BASE}/api/v1/jobs/${id}`)
   if (!res.ok) throw new Error('Failed to fetch job details')
   const json = await res.json()
-  // API returns array in example, normalize to first item
   return Array.isArray(json) ? json[0] : json
 }
 

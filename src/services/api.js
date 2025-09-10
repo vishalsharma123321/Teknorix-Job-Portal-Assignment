@@ -12,7 +12,7 @@ function buildQuery(params = {}) {
 
 
 export async function fetchJobs(params = {}, directJobId = false) {
-  // 🔹 Only fetch directly by job ID if explicitly requested
+  //  Only fetch directly by job ID if explicitly requested
   if (directJobId && params.q && /^\d+$/.test(params.q.trim())) {
     try {
       const res = await fetch(`${BASE}/api/v1/jobs/${params.q.trim()}`);
@@ -25,13 +25,13 @@ export async function fetchJobs(params = {}, directJobId = false) {
     }
   }
 
-  // 🔹 Normal jobs fetch
-  const q = buildQuery({ ...params, q: undefined }); // remove q before calling API
+  //  Normal jobs fetch
+  const q = buildQuery({ ...params, q: undefined }); 
   const res = await fetch(`${BASE}/api/v1/jobs${q}`);
   if (!res.ok) throw new Error('Failed to fetch jobs');
   let jobs = await res.json();
 
-  // 🔹 Client-side filtering
+  // Client-side filtering
   if (params.q && typeof params.q === 'string') {
     const searchTerm = params.q.toLowerCase();
     jobs = jobs.filter(job => {
@@ -63,12 +63,11 @@ export async function fetchJobs(params = {}, directJobId = false) {
 
 
 
-// Fixed function name to match JobDetailsPage import
+// function name to match JobDetailsPage import
 export async function fetchJobDetails(id) {
   const res = await fetch(`${BASE}/api/v1/jobs/${id}`)
   if (!res.ok) throw new Error('Failed to fetch job details')
   const json = await res.json()
-  // API returns array in example, normalize to first item
   return Array.isArray(json) ? json[0] : json
 }
 
