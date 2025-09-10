@@ -19,13 +19,6 @@ A React-based job portal application that displays active job openings with sear
 - SASS for styling
 - Vite for build tool
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn
-
 ### Installation
 
 1. Clone or download the project files
