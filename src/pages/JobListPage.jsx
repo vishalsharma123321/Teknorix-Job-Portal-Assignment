@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchFilters from '../components/SearchFilters';
 import JobList from '../components/JobList';
-import { fetchJobs, fetchLookups } from '../services/api';
-import '../style/pages/JobListPage.scss';
+import { fetchJobs, fetchDepartments, fetchLocations, fetchFunctions } from '../services/api';
+import '../style/pages/jobListPage.scss';
 
 const JobListPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,9 +41,9 @@ const JobListPage = () => {
   const loadLookups = async () => {
     try {
       const [departments, locations, functions] = await Promise.all([
-        fetchLookups('departments'),
-        fetchLookups('locations'),
-        fetchLookups('functions')
+        fetchDepartments(),
+        fetchLocations(),
+        fetchFunctions()
       ]);
       setLookups({ departments, locations, functions });
     } catch (error) {

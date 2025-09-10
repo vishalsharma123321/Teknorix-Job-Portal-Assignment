@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { HiOfficeBuilding, HiLocationMarker, HiCalendar, HiUsers, HiCurrencyDollar } from 'react-icons/hi';
 import '../style/components/JobList.scss';
 
 const JobList = ({ jobs, loading }) => {
@@ -13,9 +14,9 @@ const JobList = ({ jobs, loading }) => {
     return <div className="no-jobs">No jobs found</div>;
   }
 
-  // Group jobs by department
+  // Group jobs by department, handle cases where department is null
   const jobsByDepartment = jobs.reduce((acc, job) => {
-    const deptTitle = job.department?.title || 'Other';
+    const deptTitle = job.department?.title || job.industry || 'General';
     if (!acc[deptTitle]) {
       acc[deptTitle] = [];
     }
@@ -33,27 +34,60 @@ const JobList = ({ jobs, loading }) => {
     navigate(`/jobs/${job.id}`);
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return 'Not specified';
+    try {
+      return new Date(dateString).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    } catch (e) {
+      return 'Not specified';
+    }
+  };
+
   return (
     <div className="job-list">
       {Object.entries(jobsByDepartment).map(([department, departmentJobs]) => (
         <div key={department} className="department-section">
           <h2 className="department-title">{department}</h2>
           
-          <div className="jobs-grid">
+          <div className="jobs-container">
             {departmentJobs.map((job) => (
-              <div key={job.id} className="job-card">
-                <h3 className="job-title">{job.title}</h3>
-                
-                <div className="job-meta">
-                  <span className="meta-item">
-                    <i className="icon-department"></i>
-                    {job.department?.title}
-                  </span>
-                  <span className="meta-item">
-                    <i className="icon-location"></i>
-                    {job.location?.city}, {job.location?.state}
-                  </span>
-                  <span className="job-type">{job.type}</span>
+              <div key={job.id} className="job-item">
+                <div className="job-content">
+                  <h3 className="job-title">{job.title}</h3>
+                  
+                  <div className="job-meta">
+                    <span className="meta-item">
+                      <HiOfficeBuilding className="meta-icon" />
+                      {job.department?.title || job.industry || 'General'}
+                    </span>
+                    <span className="meta-item">
+                      <HiLocationMarker className="meta-icon" />
+                      {job.location?.city ? `${job.location.city}, ${job.location.state}` : 'Location not specified'}
+                    </span>
+                    {job.type && (
+                      <span className="job-type">{job.type}</span>
+                    )}
+                    {job.experience && (
+                      <span className="meta-item">
+                        <HiUsers className="meta-icon" />
+                        {job.experience}
+                      </span>
+                    )}
+                    {job.salary && (
+                      <span className="meta-item">
+                        <HiCurrencyDollar className="meta-icon" />
+                        {job.salary}
+                      </span>
+                    )}
+                    <span className="meta-item">
+                      <HiCalendar className="meta-icon" />
+                      Posted: {formatDate(job.postedDate)}
+                    </span>
+                  </div>
                 </div>
 
                 <div className="job-actions">

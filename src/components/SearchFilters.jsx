@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { IoSearch, IoChevronDown, IoClose } from 'react-icons/io5';
 import '../style/components/SearchFilters.scss';
 
 const SearchFilters = ({ filters, lookups, onFilterChange, onRemoveFilter }) => {
-  const handleInputChange = (field, value) => {
-    onFilterChange({ [field]: value });
-  };
+  const [searchText, setSearchText] = useState(filters.q || "");
+
+const handleInputChange = (value) => {
+  setSearchText(value);
+  // Always do live search (text or number)
+  onFilterChange({ q: value });
+};
+
+const handleSearch = (e) => {
+  e.preventDefault();
+  if (searchText.trim()) {
+    // If numeric, explicitly trigger job ID fetch
+    const isNumeric = /^\d+$/.test(searchText.trim());
+    onFilterChange({ q: searchText.trim() }, isNumeric);
+  }
+};
 
   const getFilterLabel = (filterKey, value) => {
     switch (filterKey) {
@@ -25,28 +39,25 @@ const SearchFilters = ({ filters, lookups, onFilterChange, onRemoveFilter }) => 
 
   return (
     <div className="search-filters">
-      <div className="search-row">
+      <form className="search-row" onSubmit={handleSearch}>
         <div className="search-input">
           <input
             type="text"
-            placeholder="Search for Job"
-            value={filters.q}
-            onChange={(e) => handleInputChange('q', e.target.value)}
+            placeholder="Search by Job ID, Title, Company..."
+            value={searchText}
+            onChange={(e) => handleInputChange(e.target.value)}
           />
-          <button className="search-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <circle cx="11" cy="11" r="8" stroke="#4CAF50" strokeWidth="2"/>
-              <path d="m21 21-4.35-4.35" stroke="#4CAF50" strokeWidth="2"/>
-            </svg>
+          <button type="submit" className="search-btn">
+            <IoSearch size={20} />
           </button>
         </div>
-      </div>
+      </form>
 
       <div className="filters-row">
         <div className="filter-dropdown">
           <select
             value={filters.dept}
-            onChange={(e) => handleInputChange('dept', e.target.value)}
+            onChange={(e) => onFilterChange({ dept: e.target.value })}
           >
             <option value="">Department</option>
             {lookups.departments.map((dept) => (
@@ -55,13 +66,13 @@ const SearchFilters = ({ filters, lookups, onFilterChange, onRemoveFilter }) => 
               </option>
             ))}
           </select>
-          <span className="dropdown-arrow">›</span>
+          <IoChevronDown className="dropdown-arrow" />
         </div>
 
         <div className="filter-dropdown">
           <select
             value={filters.loc}
-            onChange={(e) => handleInputChange('loc', e.target.value)}
+            onChange={(e) => onFilterChange({ loc: e.target.value })}
           >
             <option value="">Location</option>
             {lookups.locations.map((location) => (
@@ -70,13 +81,13 @@ const SearchFilters = ({ filters, lookups, onFilterChange, onRemoveFilter }) => 
               </option>
             ))}
           </select>
-          <span className="dropdown-arrow">›</span>
+          <IoChevronDown className="dropdown-arrow" />
         </div>
 
         <div className="filter-dropdown">
           <select
             value={filters.fun}
-            onChange={(e) => handleInputChange('fun', e.target.value)}
+            onChange={(e) => onFilterChange({ fun: e.target.value })}
           >
             <option value="">Function</option>
             {lookups.functions.map((func) => (
@@ -85,7 +96,7 @@ const SearchFilters = ({ filters, lookups, onFilterChange, onRemoveFilter }) => 
               </option>
             ))}
           </select>
-          <span className="dropdown-arrow">›</span>
+          <IoChevronDown className="dropdown-arrow" />
         </div>
       </div>
 
@@ -98,7 +109,7 @@ const SearchFilters = ({ filters, lookups, onFilterChange, onRemoveFilter }) => 
                 className="remove-filter"
                 onClick={() => onRemoveFilter(key)}
               >
-                ×
+                <IoClose size={14} />
               </button>
             </div>
           ))}

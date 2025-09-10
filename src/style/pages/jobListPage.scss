@@ -1,7 +1,6 @@
 .job-list-page {
   min-height: 100vh;
-  padding: 40px 0;
-  background-color: #f8f9fa;
+  background-color: #ffffff;
 
   .container {
     max-width: 1200px;
@@ -10,8 +9,6 @@
   }
 
   @media (max-width: 768px) {
-    padding: 20px 0;
-
     .container {
       padding: 0 15px;
     }
